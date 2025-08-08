@@ -1,0 +1,84 @@
+
+<!doctype html>
+<html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin - Strona PZU</title><link rel="stylesheet" href="assets/css/style.css"></head><body>
+<div class="container">
+<h2>Panel administratora - Strona PZU</h2>
+<p>Login: <strong>marekwisniewski9010</strong></p>
+<form id="loginForm">
+<label>Login:<br><input id="login" value=""></label><br><label>Hasło:<br><input id="pass" type="password"></label><br>
+<button type="submit">Zaloguj</button>
+</form>
+<div id="adminArea" style="display:none">
+  <h3>Edytuj sekcje</h3>
+  <label>Wsparcie Najbliższych:<br><textarea id="wsparcie" rows="4"></textarea></label><br>
+  <label>Perspektywa na Przyszłość:<br><textarea id="perspektywa" rows="4"></textarea></label><br>
+  <label>Ochrona Każdego Dnia:<br><textarea id="ochrona" rows="4"></textarea></label><br>
+  <label>Umowy Dodatkowe:<br><textarea id="umowy" rows="4"></textarea></label><br>
+  <label>Pakiet medyczny:<br><textarea id="medical" rows="4"></textarea></label><br>
+  <h4>Ubezpieczenia grupowe</h4>
+  <label>Życie:<br><textarea id="gzycie" rows="2"></textarea></label><br>
+  <label>Zdrowie:<br><textarea id="gzdrowie" rows="2"></textarea></label><br>
+  <label>Pakiet:<br><textarea id="gpakt" rows="2"></textarea></label><br>
+  <button id="save">Zapisz</button>
+  <h4>Zmień hasło admina</h4>
+  <label>Nowe hasło:<br><input id="newpass" type="password"></label><button id="changepass">Zmień</button>
+  <p><button id="logout">Wyloguj</button></p>
+</div>
+<script>
+const adminLogin = 'marekwisniewski9010';
+const adminPassKey = 'pzu_admin_pass';
+
+if(!localStorage.getItem(adminPassKey)){
+  localStorage.setItem(adminPassKey, 'marek9010');
+}
+
+document.getElementById('loginForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const l = document.getElementById('login').value.trim();
+  const p = document.getElementById('pass').value;
+  if(l===adminLogin && p===localStorage.getItem(adminPassKey)){
+    document.getElementById('adminArea').style.display='block';
+    this.style.display='none';
+    loadFields();
+  } else alert('Niepoprawny login lub hasło');
+});
+
+function loadFields(){
+  const d = JSON.parse(localStorage.getItem('pzu_data')||'null') || {};
+  document.getElementById('wsparcie').value = (d.tabs && d.tabs.wsparcie) || '';
+  document.getElementById('perspektywa').value = (d.tabs && d.tabs.perspektywa) || '';
+  document.getElementById('ochrona').value = (d.tabs && d.tabs.ochrona) || '';
+  document.getElementById('umowy').value = (d.tabs && d.tabs.umowy) || '';
+  document.getElementById('medical').value = d.medical || '';
+  document.getElementById('gzycie').value = (d.group && d.group.zycie) || '';
+  document.getElementById('gzdrowie').value = (d.group && d.group.zdrowie) || '';
+  document.getElementById('gpakt').value = (d.group && d.group.pakiet) || '';
+}
+
+document.getElementById('save').addEventListener('click', function(e){
+  e.preventDefault();
+  const d = JSON.parse(localStorage.getItem('pzu_data')||'null') || {tabs:{},group:{}};
+  d.tabs.wsparcie = document.getElementById('wsparcie').value;
+  d.tabs.perspektywa = document.getElementById('perspektywa').value;
+  d.tabs.ochrona = document.getElementById('ochrona').value;
+  d.tabs.umowy = document.getElementById('umowy').value;
+  d.medical = document.getElementById('medical').value;
+  d.group.zycie = document.getElementById('gzycie').value;
+  d.group.zdrowie = document.getElementById('gzdrowie').value;
+  d.group.pakiet = document.getElementById('gpakt').value;
+  localStorage.setItem('pzu_data', JSON.stringify(d));
+  alert('Zapisano');
+});
+
+document.getElementById('changepass').addEventListener('click', function(e){
+  e.preventDefault();
+  const np = document.getElementById('newpass').value;
+  if(np.length<4) return alert('Hasło za krótkie');
+  localStorage.setItem(adminPassKey, np);
+  alert('Hasło zmienione');
+});
+
+document.getElementById('logout').addEventListener('click', function(){ location.reload(); });
+</script>
+</body></html>

@@ -1,0 +1,13 @@
+
+:root{--blue:#0b3d91;--light:#e7f0ff;--white:#fff;}
+body{font-family:Arial,Helvetica,sans-serif;margin:0;color:#222}
+.container{max-width:980px;margin:0 auto;padding:20px}
+.hero{background:linear-gradient(180deg,var(--blue),#2b6fb3);color:var(--white);padding:40px 0;text-align:center}
+.hero h1{margin:0;font-size:28px}
+.call{display:inline-block;margin-top:12px;background:var(--white);color:var(--blue);padding:10px 16px;text-decoration:none;border-radius:6px}
+.wave{height:40px;background:linear-gradient(180deg,var(--light),transparent);border-top-left-radius:50% 20px;border-top-right-radius:50% 20px}
+.card{background:#fff;border-radius:8px;padding:16px;margin:18px 0;box-shadow:0 2px 6px rgba(0,0,0,0.06)}
+.tabs button,.group-tabs button{margin-right:8px;padding:8px 12px;border-radius:6px;border:1px solid #ccc;background:#f8f8f8;cursor:pointer}
+.tabcontent,#groupcontent,#medicalContent{margin-top:12px;padding:8px;border-left:3px solid var(--blue);background:#f7fbff}
+.footer{background:#f1f6ff;padding:12px 0;text-align:center}
+.contacts a{margin-right:12px;color:var(--blue);text-decoration:none}
